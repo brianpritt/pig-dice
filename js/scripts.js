@@ -8,8 +8,8 @@ function diceRoll() {//rolls dice
 
 function computerPass() {//how to handle a "pass"
   currentPlayer.score += currentPlayer.tally;
-
   currentPlayer.tally = 0;
+
   if (currentPlayer.name === "playerOne") {
     currentPlayer = computer;
   } else {
@@ -33,21 +33,26 @@ function computerPlay() {//for computer taking its' turn
   }
 }
 
+function playerTurn() {
+  dice = diceRoll();
+
+  if (dice > 1) {
+    currentPlayer.tally += dice;
+  } else {
+    currentPlayer.tally = 0;
+    computerPass();
+    computerPlay();
+  }
+  return currentPlayer.tally;
+}
+
 
 
 $(function() {
 
   $(".roll-dice").click(function(){//listens for "roll"
-
-    var dice = diceRoll();
-
-    if (dice > 1) {
-      currentPlayer.tally += dice;
-    } else {
-      currentPlayer.tally = 0;
-      computerPass();
-      computerPlay();
-    }
+    $("#roll-score").text("Roll: " + diceRoll());
+    $("#tally-score").text("Tally: " + playerTurn());
   });
 
   $(".pass").click(function(){//listens for "pass"
