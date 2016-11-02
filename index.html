@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Itim" rel="stylesheet">
     <script src="js/jquery-3.1.1.js"></script>
     <script src="js/scripts.js"></script>
     <title></title>
@@ -15,20 +16,27 @@
       </div>
       <div class="row">
         <div class="col-md-12 well" id="player-one">
-          <h3>Player One <span class="p1-score"></span></h3>
+          <h3>Player One: <span class="p1-score"></span></h3>
 
-          <h3>Computer <span class="p2-score"></span></h3>
+          <h3>Computer: <span class="p2-score"></span></h3>
         </div>
 
 
         <div class="col-md-12 well" id="score">
           <div id="roll-score"></div>
           <div id="tally-score"></div>
+          <h3><span class="tally"></span> <span class="roll"></span></h3>
+          <h3><span class="computer-roll"></span></h3>
           <button type="button" name="button" class="roll-dice btn">Roll!</button>
           <button type="button" name="button" class="pass btn">Pass!</button>
-          <h3><span class="tally"></span> <span class="roll"></span></h3>
-          <h3><span class="computer-roll">Computer rolls:  </span></h3>
+
         </div>
+        <div class="well" id="you-win">
+          <h2>You Win!!!</h2>
+        </well>
+        <well class="well "id="you-lose">
+          <h2>You Lose!!!</h2>
+        </well>
       </div>
     </div>
   </body>

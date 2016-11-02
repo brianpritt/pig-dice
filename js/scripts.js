@@ -1,5 +1,7 @@
 playerOne = {name: "playerOne", score: 0, tally: 0}
 computer = {name: "computer", score: 0, tally:0}
+// scores = {p1score: 0, p1Total: 0, p2Score: 0, p2Tally : 0}
+
 var currentPlayer = playerOne;
 
 
@@ -10,10 +12,6 @@ function diceRoll() {//rolls dice
 
 function computerPass() {//how to handle a "pass"
   currentPlayer.score += currentPlayer.tally;
-  $(".computer-roll").text("Computer Rolls: " + computer.tally);
-  $(".p2-score").text(" " + computer.score);
-  $(".roll").text("");
-
   currentPlayer.tally = 0;
 
   if (currentPlayer.name === "playerOne") {
@@ -34,38 +32,64 @@ function computerPlay() {//for computer taking its' turn
         index = 2;
       }
     }
-    computerPass();
   }
 }
 
-function playerTurn() {
-  dice = diceRoll();
-
+function playerTurn(dice) {
   if (dice > 1) {
     currentPlayer.tally += dice;
   } else {
     currentPlayer.tally = 0;
-    // debugger;
-    computerPass();
-    computerPlay();
   }
-  return dice;
 }
 
+function checkScore() {
+  if (playerOne.score >= 100){
+    $("#you-win").show();
+    $("#score").hide();
+  }else if (computer.score>=100){
+    $(".p2-score").text(computer.score);
+    $("#you-lose").show();
+    $("#score").hide();
 
+
+
+  }
+}
 
 $(function() {
+  $(".roll").text("Roll: " );
+  $(".tally").text("Tally: ");
+  $(".computer-roll").text("Computer roll: ");
   $(".roll-dice").click(function(){//listens for "roll"
-    var turnOfturns = playerTurn();
-    $(".p1-score").text(playerOne.score);
-    $(".p2-score").text(computer.score);
-    $(".roll").text("Roll: " + turnOfturns);
-    $(".tally").text("Tally: " + playerOne.tally);
+    var diceValue = diceRoll();
+    if (diceValue === 1){
+      $(".roll").text("Roll: " + diceValue);
+      $(".tally").text("Tally: " + playerOne.tally);
+      playerOne.tally = 0;
+      computerPass();
+      computerPlay();
+      $(".computer-roll").text("Computer roll: " + computer.tally);
+      computerPass();
+      checkScore();
+    }else {
+      playerTurn(diceValue);
+
+      $(".p1-score").text(playerOne.score);
+      $(".p2-score").text(computer.score);
+      $(".roll").text("Roll: " + diceValue);
+      $(".tally").text("Tally: " + playerOne.tally);
+      checkScore();
+
+    }
   });
 
   $(".pass").click(function(){//listens for "pass"
     computerPass();
     $(".p1-score").text(playerOne.score);
     computerPlay();
+    $(".computer-roll").text("Computer roll: " + computer.tally)
+    computerPass();
+    checkScore();
   });
 });

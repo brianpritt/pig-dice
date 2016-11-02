@@ -1,3 +1,16 @@
 .heading {
   text-align: center;
 }
+
+#you-win {
+  display: none;
+}
+
+#you-lose {
+  display: none;
+}
+
+body{
+  background-color: coral;
+  font-family: 'Itim', cursive;
+}
