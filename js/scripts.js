@@ -1,70 +1,60 @@
 playerOne = {name: "playerOne", score: 0, tally: 0}
 computer = {name: "computer", score: 0, tally:0}
+var currentPlayer = playerOne;
 
-
-function diceRoll() {
+function diceRoll() {//rolls dice
   return (1 + Math.floor(Math.random() * 6));
 }
 
-function whichPlayer(player){
-  if (player = 1){
-    return 2;
-  }else{
-    return 1;
+function computerPass() {//how to handle a "pass"
+  currentPlayer.score += currentPlayer.tally;
+
+  currentPlayer.tally = 0;
+  if (currentPlayer.name === "playerOne") {
+    currentPlayer = computer;
+  } else {
+    currentPlayer = playerOne;
+  }
+  console.log(currentPlayer.name);
+}
+
+function computerPlay() {//for computer taking its' turn
+  if (currentPlayer.name === "computer") {
+    for (var index = 0; index <= 1; index++) {
+      var dice = diceRoll();
+      if (dice > 1) {
+        currentPlayer.tally += dice;
+      } else {
+        currentPlayer.tally = 0;
+        index = 2;
+      }
+    }
+    computerPass();
   }
 }
 
-$(function() {
-  var currentPlayer = playerOne;
 
-  $(".roll-dice").click(function(){
+
+$(function() {
+
+  $(".roll-dice").click(function(){//listens for "roll"
 
     var dice = diceRoll();
-    $("#roll-score").text("Roll: " +dice);
 
     if (dice > 1) {
       currentPlayer.tally += dice;
-      $("#tally-score").text("Tally: " + currentPlayer.tally);
-    }
-    else {
+    } else {
       currentPlayer.tally = 0;
-      $("#tally-score").text("Tally: " + currentPlayer.tally);
-      currentPlayer = computer;
-      console.log(currentPlayer.name);
+      computerPass();
+      computerPlay();
     }
   });
 
-  // function()
-  $(".pass").click(function(){
-    currentPlayer.score += currentPlayer.tally;
-    $("#player-one p").text(playerOne.score);
-    $("#computer p").text(computer.score);
-
-    currentPlayer.tally = 0;
-    if (currentPlayer == playerOne) {
-      currentPlayer = computer;
-    }
-    else {
-      currentPlayer = playerOne;
-    }
-    console.log(currentPlayer.name);
+  $(".pass").click(function(){//listens for "pass"
+    computerPass();
+    computerPlay();
   });
 
 
-  if (currentPlayer.name === "computer") {
-    debugger;
-    for (var index = 0; index < 2; index++) {
-      var dice = rollDice();
-      if (dice > 1) {
-        currentPlayer.tally += dice;
-        $("#tally-score").text("Tally: " + currentPlayer.tally);
-      }
-      else {
-        currentPlayer.tally = 0;
-        $("#tally-score").text("Tally: " + currentPlayer.tally);
-        index = 2;
-        currentPlayer = computer;
-      }
-    }
-  }
+
 });
